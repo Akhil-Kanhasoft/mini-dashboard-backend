@@ -17,9 +17,18 @@ jobs:
       - name: Add SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 700 ~/.ssh
+          # Use printf to preserve newlines in the private key
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          echo -e "Host *\n  StrictHostKeyChecking no" > ~/.ssh/config
+          # Configure SSH
+          cat > ~/.ssh/config << EOF
+          Host *
+            StrictHostKeyChecking no
+            UserKnownHostsFile=/dev/null
+            IdentitiesOnly yes
+          EOF
+          chmod 600 ~/.ssh/config
 
       - name: Deploy to VM
         run: |
