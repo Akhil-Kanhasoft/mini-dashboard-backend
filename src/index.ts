@@ -15,6 +15,8 @@ export default {
    *
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
+   * 
+   * CI/CD Pipeline: Automated deployment enabled ✅
    */
   bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {},
 };
